@@ -1,10 +1,6 @@
 {
-    "name": "fps.Game",
-    "rootNamespace": "",
-    "references": [
-        "GUID:1826c0224c0d048b88112c79bbb0cd85",
-        "GUID:309ca0c89e87add4a825848e7764337f"
-    ],
+    "name": "AYellowpaper.SerializedCollections",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

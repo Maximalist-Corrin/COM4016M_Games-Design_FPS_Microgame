@@ -1,9 +1,9 @@
 {
-    "name": "fps.Game",
+    "name": "Josh.Scripts",
     "rootNamespace": "",
     "references": [
-        "GUID:1826c0224c0d048b88112c79bbb0cd85",
-        "GUID:309ca0c89e87add4a825848e7764337f"
+        "AYellowpaper.SerializedCollections",
+        "AYellowpaper.SerializedCollections.Editor"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

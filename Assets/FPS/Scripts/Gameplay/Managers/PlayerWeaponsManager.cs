@@ -2,6 +2,7 @@
 using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
+using Josh.Scripts;
 
 namespace Unity.FPS.Gameplay
 {
@@ -93,6 +94,7 @@ namespace Unity.FPS.Gameplay
         WeaponSwitchState m_WeaponSwitchState;
         int m_WeaponSwitchNewWeaponIndex;
         
+        AmmoInventory m_AmmoInventory;
         
         void Start()
         {
@@ -106,6 +108,10 @@ namespace Unity.FPS.Gameplay
             m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
             DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, PlayerWeaponsManager>(
                 m_PlayerCharacterController, this, gameObject);
+            
+            m_AmmoInventory = GetComponent<AmmoInventory>();
+            DebugUtility.HandleErrorIfNullGetComponent<AmmoInventory, PlayerWeaponsManager>(
+                m_AmmoInventory, this, gameObject);
 
             SetFov(DefaultFov);
 
