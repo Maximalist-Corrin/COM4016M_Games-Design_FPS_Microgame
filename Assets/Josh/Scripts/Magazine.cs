@@ -7,6 +7,11 @@ namespace Josh.Scripts
         public MagazineData UsedMagazineData;
         public int CurrentAmmo;
 
+        void Start()
+        {
+            CurrentAmmo = UsedMagazineData.MagazineSize;
+        }
+
         public void ReduceAmmo(int amount)
         {
             CurrentAmmo -= amount;

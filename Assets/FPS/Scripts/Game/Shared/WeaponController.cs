@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Josh.Scripts;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -138,6 +139,8 @@ namespace Unity.FPS.Game
         float m_LastTimeShot = Mathf.NegativeInfinity;
         public float LastChargeTriggerTimestamp { get; private set; }
         Vector3 m_LastMuzzlePosition;
+        
+        Magazine m_Magazine;
 
         public GameObject Owner { get; set; }
         public GameObject SourcePrefab { get; set; }
@@ -171,6 +174,10 @@ namespace Unity.FPS.Game
 
             m_ShootAudioSource = GetComponent<AudioSource>();
             DebugUtility.HandleErrorIfNullGetComponent<AudioSource, WeaponController>(m_ShootAudioSource, this,
+                gameObject);
+            
+            m_Magazine = GetComponent<Magazine>();
+            DebugUtility.HandleErrorIfNullGetComponent<Magazine, WeaponController>(m_Magazine, this,
                 gameObject);
 
             if (UseContinuousShootSound)
