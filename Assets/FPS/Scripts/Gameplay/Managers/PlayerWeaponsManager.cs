@@ -71,7 +71,7 @@ namespace Unity.FPS.Gameplay
 
         [Tooltip("Layer to set FPS weapon gameObjects to")]
         public LayerMask FpsWeaponLayer;
-
+        
         public bool IsAiming { get; private set; }
         public bool IsPointingAtEnemy { get; private set; }
         public int ActiveWeaponIndex { get; private set; }
@@ -92,7 +92,8 @@ namespace Unity.FPS.Gameplay
         float m_TimeStartedWeaponSwitch;
         WeaponSwitchState m_WeaponSwitchState;
         int m_WeaponSwitchNewWeaponIndex;
-
+        
+        
         void Start()
         {
             ActiveWeaponIndex = -1;
@@ -131,8 +132,9 @@ namespace Unity.FPS.Gameplay
             {
                 if (!activeWeapon.AutomaticReload && m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
                 {
+                    Debug.Log("Reload");
                     IsAiming = false;
-                    activeWeapon.StartReloadAnimation();
+                    activeWeapon.ManualReload();
                     return;
                 }
                 // handle aiming down sights

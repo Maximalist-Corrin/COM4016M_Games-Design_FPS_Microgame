@@ -234,6 +234,14 @@ namespace Unity.FPS.Game
             }
         }
 
+        public void ManualReload()
+        {
+            if (m_CurrentAmmo < MaxAmmo)
+            {
+                IsReloading = true;
+            }
+        }
+
         void Update()
         {
             UpdateAmmo();
@@ -249,7 +257,7 @@ namespace Unity.FPS.Game
 
         void UpdateAmmo()
         {
-            if (AutomaticReload && m_LastTimeShot + AmmoReloadDelay < Time.time && m_CurrentAmmo < MaxAmmo && !IsCharging)
+            if ((AutomaticReload || IsReloading) && m_LastTimeShot + AmmoReloadDelay < Time.time && m_CurrentAmmo < MaxAmmo && !IsCharging)
             {
                 // reloads weapon over time
                 m_CurrentAmmo += AmmoReloadRate * Time.deltaTime;
@@ -262,6 +270,7 @@ namespace Unity.FPS.Game
             else
             {
                 IsCooling = false;
+                IsReloading = false;
             }
 
             if (MaxAmmo == Mathf.Infinity)
@@ -498,5 +507,7 @@ namespace Unity.FPS.Game
 
             return spreadWorldDirection;
         }
+        
+        // Josh Functions
     }
 }
