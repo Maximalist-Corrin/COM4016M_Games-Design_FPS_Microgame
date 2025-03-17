@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Codice.Client.BaseCommands;
+using System.Collections.Generic;
 using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+
 
 namespace Unity.FPS.AI
 {
@@ -71,9 +73,13 @@ namespace Unity.FPS.AI
 
         [Header("Loot")] [Tooltip("The object this enemy can drop when dying")]
         public GameObject LootPrefab;
-
         [Tooltip("The chance the object has to drop")] [Range(0, 1)]
         public float DropRate = 1f;
+
+        [Header("Ammo")] [Tooltip("The ammo this enemy can drop when dying")] // TK
+        public GameObject AmmoLootPrefab;
+        [Tooltip("The threshold for the chance for ammo to drop")] [Range(0, 1)] // TK
+        public static float CurrentThreshold = 0.25f;
 
         [Header("Debug Display")] [Tooltip("Color of the sphere gizmo representing the path reaching range")]
         public Color PathReachingRangeColor = Color.yellow;
@@ -117,9 +123,10 @@ namespace Unity.FPS.AI
         WeaponController m_CurrentWeapon;
         WeaponController[] m_Weapons;
         NavigationModule m_NavigationModule;
-
+        private float SaveStateThreshold;
         void Start()
         {
+            SaveStateThreshold = CurrentThreshold;
             m_EnemyManager = FindObjectOfType<EnemyManager>();
             DebugUtility.HandleErrorIfNullFindObject<EnemyManager, EnemyController>(m_EnemyManager, this);
 
@@ -199,7 +206,7 @@ namespace Unity.FPS.AI
                     m_EyeRendererData.MaterialIndex);
             }
         }
-
+        
         void Update()
         {
             EnsureIsWithinLevelBounds();
@@ -372,6 +379,11 @@ namespace Unity.FPS.AI
                 Instantiate(LootPrefab, transform.position, Quaternion.identity);
             }
 
+            if (TryDropAmmo()) // TK
+            {
+                Instantiate(AmmoLootPrefab, transform.position, Quaternion.identity);
+            }
+
             // this will call the OnDestroy function
             Destroy(gameObject, DeathDuration);
         }
@@ -439,6 +451,22 @@ namespace Unity.FPS.AI
                 return true;
             else
                 return (Random.value <= DropRate);
+        }
+        public bool TryDropAmmo() // TK
+        {
+            float randomvalue = UnityEngine.Random.Range(0f, 1f);
+            if (randomvalue < CurrentThreshold)
+            {
+                CurrentThreshold = SaveStateThreshold;
+                return true;
+            }
+
+            else
+            {
+                CurrentThreshold += 0.2f;
+                return false;
+            }
+
         }
 
         void FindAndInitializeAllWeapons()
