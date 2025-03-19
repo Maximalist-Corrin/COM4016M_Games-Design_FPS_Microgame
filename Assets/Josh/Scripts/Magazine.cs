@@ -5,29 +5,40 @@ namespace Josh.Scripts
     public class Magazine : MonoBehaviour
     {
         public MagazineData UsedMagazineData;
-        public int CurrentAmmo;
+        public float CurrentAmmo;
 
         void Start()
         {
             CurrentAmmo = UsedMagazineData.MagazineSize;
         }
 
-        public void ReduceAmmo(int amount)
+        public void FullLoad()
         {
-            CurrentAmmo -= amount;
+            CurrentAmmo = UsedMagazineData.MagazineSize;
         }
 
-        public int LoadMagazine(int amount)
+        public void ReduceAmmo(float amount)
         {
-            int totalLoad = CurrentAmmo + amount;
+            CurrentAmmo = Mathf.Clamp(CurrentAmmo - amount, 0, UsedMagazineData.MagazineSize);
+
+        }
+
+        public float LoadMagazine(float amount)
+        {
+            float totalLoad = CurrentAmmo + amount;
             if (totalLoad > UsedMagazineData.MagazineSize)
             {
-                int overflow = totalLoad - UsedMagazineData.MagazineSize;
+                float overflow = totalLoad - UsedMagazineData.MagazineSize;
                 CurrentAmmo = UsedMagazineData.MagazineSize;
                 return overflow;
             }
             CurrentAmmo = totalLoad;
             return 0;
+        }
+
+        public float CurrentAmmoRatio()
+        {
+            return CurrentAmmo / UsedMagazineData.MagazineSize;
         }
 
         public bool HasAmmo()
@@ -37,7 +48,7 @@ namespace Josh.Scripts
 
         public bool IsFull()
         {
-            return CurrentAmmo == UsedMagazineData.MagazineSize;
+            return CurrentAmmo >= UsedMagazineData.MagazineSize;
         }
     }
 }

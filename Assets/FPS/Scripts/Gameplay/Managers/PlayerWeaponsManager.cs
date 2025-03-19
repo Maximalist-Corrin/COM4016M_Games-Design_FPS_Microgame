@@ -131,8 +131,6 @@ namespace Unity.FPS.Gameplay
             // shoot handling
             WeaponController activeWeapon = GetActiveWeapon();
 
-            if (activeWeapon != null && activeWeapon.IsReloading)
-                return;
 
             if (activeWeapon != null && m_WeaponSwitchState == WeaponSwitchState.Up)
             {
