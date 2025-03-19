@@ -22,6 +22,10 @@ namespace Josh.Scripts
             CurrentAmmo = Mathf.Clamp(CurrentAmmo - amount, 0, UsedMagazineData.MagazineSize);
 
         }
+        public float AmmoNeededToFill()
+        {
+            return UsedMagazineData.MagazineSize - CurrentAmmo;
+        }
 
         public float LoadMagazine(float amount)
         {

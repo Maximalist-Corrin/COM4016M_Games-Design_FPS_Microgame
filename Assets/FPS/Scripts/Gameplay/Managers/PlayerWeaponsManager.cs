@@ -134,11 +134,20 @@ namespace Unity.FPS.Gameplay
 
             if (activeWeapon != null && m_WeaponSwitchState == WeaponSwitchState.Up)
             {
-                if (!activeWeapon.AutomaticReload && m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
+                if (!activeWeapon.AutomaticReload && m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f && !activeWeapon.IsReloading)
                 {
                     Debug.Log("Reload");
                     IsAiming = false;
-                    activeWeapon.ManualReload();
+                    Magazine magazine = activeWeapon.gameObject.GetComponent<Magazine>();
+                    float ammoNeeded = magazine.AmmoNeededToFill();
+                    AmmoType ammoType = magazine.UsedMagazineData.UsedAmmoType;
+                    if (!m_AmmoInventory.HasAmmo(ammoType))
+                    {
+                        return;
+                    }
+                    float ammoToLoad = m_AmmoInventory.GetAmmo(ammoType, ammoNeeded);
+                    
+                    activeWeapon.ManualReload(ammoToLoad);
                     return;
                 }
                 // handle aiming down sights

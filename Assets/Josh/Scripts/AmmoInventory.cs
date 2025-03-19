@@ -8,31 +8,31 @@ namespace Josh.Scripts
 {
     public class AmmoInventory : MonoBehaviour
     {
-        public SerializedDictionary<AmmoType, int> StoredAmmo = new SerializedDictionary<AmmoType, int>();
+        public SerializedDictionary<AmmoType, float> StoredAmmo = new SerializedDictionary<AmmoType, float>();
         public bool IsInfiniteAmmo = false;
         public bool HasAmmo(AmmoType ammoType)
         {
             if (IsInfiniteAmmo) return true;
-            return StoredAmmo.TryGetValue(ammoType, out int ammo) && ammo > 0;
+            return StoredAmmo.TryGetValue(ammoType, out float ammo) && ammo > 0;
         }
     
-        public int GetAmmo(AmmoType ammoType, int amount)
+        public float GetAmmo(AmmoType ammoType, float amount)
         {
             if (IsInfiniteAmmo) return amount;
             
-            StoredAmmo.TryGetValue(ammoType, out int ammo);
+            StoredAmmo.TryGetValue(ammoType, out float ammo);
             if (ammo >= amount)
             {
                 StoredAmmo[ammoType] -= amount;
                 return amount;
             }
             
-            int ammoToReturn = ammo;
+            float ammoToReturn = ammo;
             StoredAmmo[ammoType] = 0;
             return ammoToReturn;
         }
 
-        public void AddAmmo(AmmoType ammoType, int amount)
+        public void AddAmmo(AmmoType ammoType, float amount)
         {
             if (IsInfiniteAmmo) return;
                 

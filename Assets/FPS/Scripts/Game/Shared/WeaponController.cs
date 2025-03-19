@@ -140,7 +140,9 @@ namespace Unity.FPS.Game
         public float LastChargeTriggerTimestamp { get; private set; }
         Vector3 m_LastMuzzlePosition;
         
+        //Josh Variables
         Magazine m_Magazine;
+        public float BulletsToReload { get; private set; }
 
         public GameObject Owner { get; set; }
         public GameObject SourcePrefab { get; set; }
@@ -241,15 +243,7 @@ namespace Unity.FPS.Game
                 IsReloading = true;
             }
         }
-
-        public void ManualReload()
-        {
-            if (!m_Magazine.IsFull())
-            {
-                IsReloading = true;
-            }
-        }
-
+        
         void Update()
         {
             UpdateAmmo();
@@ -268,14 +262,16 @@ namespace Unity.FPS.Game
             if (AutomaticReload && m_LastTimeShot + AmmoReloadDelay < Time.time && !m_Magazine.IsFull() &&
                 !IsCharging && !IsReloading)
             {
-                ManualReload();
+                //ManualReload();
             }
             
             if (IsReloading)
             {
-                if (!m_Magazine.IsFull())
+                if (!m_Magazine.IsFull() && BulletsToReload > 0f)
                 {
-                    m_Magazine.LoadMagazine(AmmoReloadRate * Time.deltaTime);
+                    float currentReload = AmmoReloadRate * Time.deltaTime;
+                    m_Magazine.LoadMagazine(currentReload);
+                    BulletsToReload = Mathf.Max(0, BulletsToReload - currentReload);
                     
                     IsCooling = true;
                 }
@@ -517,11 +513,17 @@ namespace Unity.FPS.Game
         }
         
         // Josh Functions
-
-        public void CancelReload()
+        private void CancelReload()
         {
             IsReloading = false;
             IsCooling = false;
+        }
+        
+        public void ManualReload(float bulletsToReload)
+        {
+            if (m_Magazine.IsFull()) return;
+            IsReloading = true;
+            BulletsToReload = bulletsToReload;
         }
     }
 }
