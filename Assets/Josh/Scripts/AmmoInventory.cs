@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using Unity.FPS.Game;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 
 namespace Josh.Scripts
@@ -10,6 +12,8 @@ namespace Josh.Scripts
     {
         public SerializedDictionary<AmmoType, float> StoredAmmo = new SerializedDictionary<AmmoType, float>();
         public bool IsInfiniteAmmo = false;
+        
+        public UnityAction<AmmoType, float> OnAmmoChange;
         public bool HasAmmo(AmmoType ammoType)
         {
             if (IsInfiniteAmmo) return true;
@@ -20,16 +24,18 @@ namespace Josh.Scripts
         {
             if (IsInfiniteAmmo) return amount;
             
-            StoredAmmo.TryGetValue(ammoType, out float ammo);
-            if (ammo >= amount)
-            {
-                StoredAmmo[ammoType] -= amount;
-                return amount;
-            }
+            float currentAmmo = StoredAmmo.GetValueOrDefault(ammoType, 0);
             
-            float ammoToReturn = ammo;
-            StoredAmmo[ammoType] = 0;
+            float ammoToReturn = Mathf.Min(currentAmmo, amount);
+            StoredAmmo[ammoType] = currentAmmo - ammoToReturn;
+            
+            UpdateStoredAmmoEvent evt = Events.UpdateStoredAmmoEvent;
+            evt.AmmoType = ammoType;
+            evt.AmmoCount = StoredAmmo[ammoType];
+            EventManager.Broadcast(evt);
+
             return ammoToReturn;
+
         }
 
         public void AddAmmo(AmmoType ammoType, float amount)
@@ -39,6 +45,10 @@ namespace Josh.Scripts
             if (StoredAmmo.ContainsKey(ammoType))
             {
                 StoredAmmo[ammoType] += amount;
+                UpdateStoredAmmoEvent evt = Events.UpdateStoredAmmoEvent;
+                evt.AmmoType = ammoType;
+                evt.AmmoCount = amount;
+                EventManager.Broadcast(evt);
             }
         }
     }

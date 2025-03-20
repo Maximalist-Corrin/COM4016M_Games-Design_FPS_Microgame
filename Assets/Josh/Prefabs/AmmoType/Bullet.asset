@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c6161e975017844b96a684b1def6059, type: 3}
-  m_Name: Pistol_Mag_Data
+  m_Script: {fileID: 11500000, guid: 55e12e9141855684f98883f34b501613, type: 3}
+  m_Name: Bullet
   m_EditorClassIdentifier: 
-  UsedAmmoType: {fileID: 11400000, guid: 7d3883c4f709a9847969ad480313d47e, type: 2}
-  MagazineSize: 25
+  Name: Bullet
+  Icon: {fileID: 0}
