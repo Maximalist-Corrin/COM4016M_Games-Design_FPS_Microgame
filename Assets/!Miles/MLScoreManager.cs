@@ -26,6 +26,7 @@ public class MLScoreManager : MonoBehaviour
     {
         scoreData.AddScore(currentScore);
         scoreData.SaveScores();
+        FindObjectOfType<MLScoreDisplay>().DisplayScores(); //updates UI with new scores
     }
 
     public void ResetScore()
