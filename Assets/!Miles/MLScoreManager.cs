@@ -7,8 +7,9 @@ public class MLScoreManager : MonoBehaviour
     public MLScoreData scoreData;
     private MLScoreEntry currentScore;
 
-    private void Start()
+   void Start()
     {
+        scoreData.LoadScores();
         ResetScore();
     }
 
@@ -23,8 +24,8 @@ public class MLScoreManager : MonoBehaviour
 
     public void SubmitScore(int kills, int pickups, float timeAlive)
     {
-        MLScoreEntry newScore = new MLScoreEntry(kills, pickups, timeAlive);
-        scoreData.AddScore(newScore);
+        scoreData.AddScore(currentScore);
+        scoreData.SaveScores();
     }
 
     public void ResetScore()
