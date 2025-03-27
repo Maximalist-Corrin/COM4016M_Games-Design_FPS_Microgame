@@ -18,19 +18,22 @@ public class MLScoreDisplay : MonoBehaviour
     public void DisplayScores()
     {
 
-        // Displays Recent Scores
-        for (int i = 0; i <scoreData.recentScores.Length; i++)
+        // Clears and Displays Recent Scores
+        recentScoresDataText.text = "";
+        recentScoresTotalText.text = "";
+        for (int i = 0; i < scoreData.recentScores.Length; i++)
         {
             MLScoreEntry entry = scoreData.recentScores[i];
             int totalScore = entry.GetTotalScore();
-            recentScoresDataText.text += $"#{i + 1}: Kills: {entry.kills} \nPickups: {entry.pickups} \nTime:{entry.timeAlive:F2}s ";
-            recentScoresTotalText.text += totalScore;
+            recentScoresDataText.text += $"Kills: {entry.kills} \nPickups: {entry.pickups} \nTime: {entry.timeAlive:F2}s \n\n\n";
+            recentScoresTotalText.text += $"Score: \n{totalScore} \n\n\n\n";
         }
 
         // Displays High Score
         MLScoreEntry high = scoreData.highScore;
-        int highTotalScore = high.GetTotalScore() ;
+        int highTotalScore = high.GetTotalScore();
         highScoreDataText.text = $"Kills: {high.kills} \nPickups: {high.pickups} \nTime: {high.timeAlive:F2}s ";
+        highScoreTotalText.text = $"{highTotalScore}";
 
     }
 }

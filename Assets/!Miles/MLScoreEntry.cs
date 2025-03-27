@@ -19,6 +19,6 @@ public struct MLScoreEntry
 
     public int GetTotalScore()
     {
-        return (0); //Algorithm for calculating total score
+        return (kills * 100 + Mathf.FloorToInt(timeAlive * 100) / 10); //Algorithm for calculating total score
     }
 }

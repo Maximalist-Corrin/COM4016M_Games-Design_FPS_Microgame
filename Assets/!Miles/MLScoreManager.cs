@@ -33,6 +33,11 @@ public class MLScoreManager : MonoBehaviour
     {
         currentScore = new MLScoreEntry(0, 0, 0f); // resets game starts at game start
     }
+    public void DebugAddTestScores()
+    {
+        scoreData.AddScore(new MLScoreEntry(Random.Range(1, 10), Random.Range(1, 5), Random.Range(5f, 120f)));
+        FindObjectOfType<MLScoreDisplay>().DisplayScores(); // Update UI
+    }
 }
 
 

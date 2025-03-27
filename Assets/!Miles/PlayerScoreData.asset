@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: PlayerScoreData
   m_EditorClassIdentifier: 
   recentScores:
-  - kills: 0
-    pickups: 0
-    timeAlive: 0
-  - kills: 0
-    pickups: 0
-    timeAlive: 0
-  - kills: 0
-    pickups: 0
-    timeAlive: 0
+  - kills: 1
+    pickups: 1
+    timeAlive: 41.91687
+  - kills: 3
+    pickups: 2
+    timeAlive: 44.016125
+  - kills: 5
+    pickups: 2
+    timeAlive: 27.852468
   highScore:
-    kills: 0
-    pickups: 0
-    timeAlive: 0
+    kills: 8
+    pickups: 4
+    timeAlive: 118.74019
