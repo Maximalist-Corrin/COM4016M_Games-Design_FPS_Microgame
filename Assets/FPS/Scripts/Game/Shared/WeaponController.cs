@@ -141,7 +141,7 @@ namespace Unity.FPS.Game
         Vector3 m_LastMuzzlePosition;
         
         //Josh Variables
-        Magazine m_Magazine;
+        public Magazine m_Magazine;
         public float BulletsToReload { get; private set; }
 
         public GameObject Owner { get; set; }

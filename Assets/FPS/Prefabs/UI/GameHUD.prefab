@@ -147,7 +147,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1786,7 +1788,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -1923,6 +1927,7 @@ GameObject:
   - component: {fileID: 4692738559174620312}
   - component: {fileID: 1845787234550258351}
   - component: {fileID: 1610334969856411743}
+  - component: {fileID: 2906632240716276877}
   m_Layer: 5
   m_Name: GameHUD
   m_TagString: Untagged
@@ -2103,6 +2108,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayMessageRect: {fileID: 9119402869326549703}
   MessagePrefab: {fileID: 876710413839154128, guid: dbfc7742a2f49bf42a9a012e4ec4b773,
+    type: 3}
+--- !u!114 &2906632240716276877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413294659218134590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf412a333625214299bc2ed87ab5551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AmmoInventoryCounterPrefab: {fileID: 645032500860478885, guid: 381e109c8e235f54cbcfbe7434554e49,
+    type: 3}
+  OwnerPanel: {fileID: 645032500860478886, guid: a9631a87b18fa1d44a1879f351d8c0f9,
     type: 3}
 --- !u!1 &5649045762095678184
 GameObject:
