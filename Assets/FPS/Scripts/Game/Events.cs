@@ -1,3 +1,4 @@
+using Josh.Scripts;
 using UnityEngine;
 
 namespace Unity.FPS.Game
@@ -16,6 +17,7 @@ namespace Unity.FPS.Game
         public static AmmoPickupEvent AmmoPickupEvent = new AmmoPickupEvent();
         public static DamageEvent DamageEvent = new DamageEvent();
         public static DisplayMessageEvent DisplayMessageEvent = new DisplayMessageEvent();
+        public static UpdateStoredAmmoEvent UpdateStoredAmmoEvent = new UpdateStoredAmmoEvent();
     }
 
     public class ObjectiveUpdateEvent : GameEvent
@@ -62,5 +64,11 @@ namespace Unity.FPS.Game
     {
         public string Message;
         public float DelayBeforeDisplay;
+    }
+
+    public class UpdateStoredAmmoEvent : GameEvent
+    {
+        public AmmoType AmmoType;
+        public float AmmoCount;
     }
 }
