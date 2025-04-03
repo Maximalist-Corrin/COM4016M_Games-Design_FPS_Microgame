@@ -7,7 +7,7 @@ public class MLEnemyData : ScriptableObject
 {
     // Stores base data for different enemy types that can be called when spawning waves
    
-    public int Health;
-    public int Damage;
+    public int baseHealth;
+    public int baseDamage;
     public List<Transform> Spawnpoints;
 }
