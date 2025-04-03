@@ -2,7 +2,6 @@
 using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
-using Josh.Scripts;
 
 namespace Unity.FPS.Gameplay
 {
@@ -72,7 +71,7 @@ namespace Unity.FPS.Gameplay
 
         [Tooltip("Layer to set FPS weapon gameObjects to")]
         public LayerMask FpsWeaponLayer;
-        
+
         public bool IsAiming { get; private set; }
         public bool IsPointingAtEnemy { get; private set; }
         public int ActiveWeaponIndex { get; private set; }
@@ -93,9 +92,7 @@ namespace Unity.FPS.Gameplay
         float m_TimeStartedWeaponSwitch;
         WeaponSwitchState m_WeaponSwitchState;
         int m_WeaponSwitchNewWeaponIndex;
-        
-        AmmoInventory m_AmmoInventory;
-        
+
         void Start()
         {
             ActiveWeaponIndex = -1;
@@ -108,10 +105,6 @@ namespace Unity.FPS.Gameplay
             m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
             DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, PlayerWeaponsManager>(
                 m_PlayerCharacterController, this, gameObject);
-            
-            m_AmmoInventory = GetComponent<AmmoInventory>();
-            DebugUtility.HandleErrorIfNullGetComponent<AmmoInventory, PlayerWeaponsManager>(
-                m_AmmoInventory, this, gameObject);
 
             SetFov(DefaultFov);
 
@@ -131,23 +124,15 @@ namespace Unity.FPS.Gameplay
             // shoot handling
             WeaponController activeWeapon = GetActiveWeapon();
 
+            if (activeWeapon != null && activeWeapon.IsReloading)
+                return;
 
             if (activeWeapon != null && m_WeaponSwitchState == WeaponSwitchState.Up)
             {
-                if (!activeWeapon.AutomaticReload && m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f && !activeWeapon.IsReloading)
+                if (!activeWeapon.AutomaticReload && m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
                 {
-                    Debug.Log("Reload");
                     IsAiming = false;
-                    Magazine magazine = activeWeapon.gameObject.GetComponent<Magazine>();
-                    float ammoNeeded = magazine.AmmoNeededToFill();
-                    AmmoType ammoType = magazine.UsedMagazineData.UsedAmmoType;
-                    if (!m_AmmoInventory.HasAmmo(ammoType))
-                    {
-                        return;
-                    }
-                    float ammoToLoad = m_AmmoInventory.GetAmmo(ammoType, ammoNeeded);
-                    
-                    activeWeapon.ManualReload(ammoToLoad);
+                    activeWeapon.StartReloadAnimation();
                     return;
                 }
                 // handle aiming down sights
